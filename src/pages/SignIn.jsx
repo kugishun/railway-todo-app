@@ -15,12 +15,12 @@ export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
-  const [setCookie] = useCookies();
+  const [_,setCookie] = useCookies();
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const onSignIn = () => {
     axios
-      .post(`${url}/signin`, { email: email, password: password })
+      .post(`https://${url}/signin`, { email: email, password: password })
       .then((res) => {
         setCookie('token', res.data.token);
         dispatch(signIn());

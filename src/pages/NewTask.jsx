@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import {useCookies } from 'react-cookie';
 import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header';
@@ -25,7 +25,7 @@ export const NewTask = () => {
     };
 
     axios
-      .post(`${url}/lists/${selectListId}/tasks`, data, {
+      .post(`https://${url}/lists/${selectListId}/tasks`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -40,7 +40,7 @@ export const NewTask = () => {
 
   useEffect(() => {
     axios
-      .get(`${url}/lists`, {
+      .get(`https://${url}/lists`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

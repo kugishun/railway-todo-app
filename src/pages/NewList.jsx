@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { _,useCookies } from 'react-cookie';
 import axios from 'axios';
 import { Header } from '../components/Header';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const NewList = () => {
     };
 
     axios
-      .post(`${url}/lists`, data, {
+      .post(`https://${url}/lists`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

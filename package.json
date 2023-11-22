@@ -29,7 +29,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.{js,jsx}",
     "lint": "eslint --fix src/**/*.{js,jsx}",
-    "fix": "npm run format && npm run lint",
+    "fix": "npm run format && npm run lint ",
     "compile:sass": "node-sass src/**/*.scss src/**/*.css"
   },
   "eslintConfig": {

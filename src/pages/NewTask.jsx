@@ -5,6 +5,7 @@ import { url } from '../const';
 import { Header } from '../components/Header';
 import './newTask.css';
 import { useNavigate } from 'react-router-dom';
+import CustomTimePicker from './TimePicker';
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
@@ -13,6 +14,7 @@ export const NewTask = () => {
   const [detail, setDetail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
+  const [Date,setDate] = useState();
   const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
@@ -37,6 +39,12 @@ export const NewTask = () => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`);
       });
   };
+
+  const changeValue = (newValue) =>{
+    setDate(newValue);
+    // console.log(value)
+    // console.log(value.date());
+  }
 
   useEffect(() => {
     axios
@@ -81,6 +89,10 @@ export const NewTask = () => {
             onChange={handleTitleChange}
             className="new-task-title"
           />
+          <br/>
+          <label>期限</label>
+          <br/>
+              <CustomTimePicker changeValue={changeValue} value={Date}/>
           <br />
           <label>詳細</label>
           <br />

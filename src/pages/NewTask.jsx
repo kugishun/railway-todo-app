@@ -24,8 +24,9 @@ export const NewTask = () => {
       title: title,
       detail: detail,
       done: false,
+      limit: Date
     };
-
+    console.log(data)
     axios
       .post(`https://${url}/lists/${selectListId}/tasks`, data, {
         headers: {
@@ -41,8 +42,15 @@ export const NewTask = () => {
   };
 
   const changeValue = (newValue) =>{
-    setDate(newValue);
-    // console.log(value)
+    const Year = newValue.year();
+    const Month = ('00' + (newValue.month()+1)).slice(-2);
+    const Day = ('00' + newValue.date()).slice(-2);
+    const Hour = ('00' + newValue.hour()).slice(-2);
+    const Minute = ('00' + newValue.minute()).slice(-2);
+    const Second = ('00' + newValue.second()).slice(-2);
+    const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
+    setDate(newDate);
+    console.log(newDate);
     // console.log(value.date());
   }
 

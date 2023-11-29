@@ -14,7 +14,7 @@ export default function ControlledComponent(props) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
+      <DemoContainer components={['DateTimePicker']}>
         <DateTimePicker
           value={value}
           onChange={(newValue) => changeValue(newValue)}

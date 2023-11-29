@@ -4,6 +4,7 @@ import axios from 'axios';
 import { _, useCookies } from 'react-cookie';
 import { url } from '../const';
 import { useNavigate, useParams } from 'react-router-dom';
+import CustomTimePicker from './TimePicker';
 import './editTask.css';
 
 export const EditTask = () => {
@@ -13,6 +14,7 @@ export const EditTask = () => {
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
   const [isDone, setIsDone] = useState();
+  const [Date,setDate] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
@@ -23,6 +25,7 @@ export const EditTask = () => {
       title: title,
       detail: detail,
       done: isDone,
+      limit: Date
     };
 
     axios
@@ -54,6 +57,19 @@ export const EditTask = () => {
         setErrorMessage(`削除に失敗しました。${err}`);
       });
   };
+
+  const changeValue = (newValue) =>{
+    const Year = newValue.year();
+    const Month = ('00' + (newValue.month()+1)).slice(-2);
+    const Day = ('00' + newValue.date()).slice(-2);
+    const Hour = ('00' + newValue.hour()).slice(-2);
+    const Minute = ('00' + newValue.minute()).slice(-2);
+    const Second = ('00' + newValue.second()).slice(-2);
+    const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
+    setDate(newDate);
+    console.log(newDate);
+    // console.log(value.date());
+  }
 
   useEffect(() => {
     axios
@@ -97,6 +113,10 @@ export const EditTask = () => {
             className="edit-task-detail"
             value={detail}
           />
+          <br />
+          <label>期限</label>
+          <br/>
+              <CustomTimePicker hangeValue={changeValue} value={Date}/>
           <br />
           <div>
             <input

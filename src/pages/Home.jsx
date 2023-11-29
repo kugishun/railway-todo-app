@@ -143,8 +143,12 @@ const Tasks = (props) => {
                 to={`/lists/${selectListId}/tasks/${task.id}`}
                 className="task-item-link"
               >
-                {task.title}
+                <div className='task-item-information'>
+                <span className='task-item-title'>{task.title}</span>
+                <span className='task-item-time'>test</span>
                 <br />
+                </div>
+                {/* <p className='task-item-done'>{task.done ? '完了' : '未完了'}</p> */}
                 {task.done ? '完了' : '未完了'}
               </Link>
             </li>

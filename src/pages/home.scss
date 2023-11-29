@@ -62,6 +62,21 @@
   color: #000000;
 }
 
+.task-item-information{
+  display: flex;
+  width: 100%;
+}
+
+.task-item-title{
+  display: inline-block;
+  margin-right: auto;
+}
+
+.task-item-time{
+  display: inline-block;
+  margin-left: auto;
+}
+
 .error-message {
   color: #ff3333;
 }

@@ -15,6 +15,8 @@ export const EditTask = () => {
   const [detail, setDetail] = useState('');
   const [isDone, setIsDone] = useState();
   const [Date,setDate] = useState();
+  const [getDate,setGetDate] = useState();
+  const [getTime,setGetTime] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
@@ -83,6 +85,11 @@ export const EditTask = () => {
         setTitle(task.title);
         setDetail(task.detail);
         setIsDone(task.done);
+        if(task.limit != null){
+          console.log(task.limit);
+          setGetDate((task.limit).slice(0,10));
+          setGetTime((task.limit).slice(11,16));
+        }
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
@@ -115,6 +122,7 @@ export const EditTask = () => {
           />
           <br />
           <label>期限</label>
+          <p>現在の期限 {getDate} {getTime}</p>
           <br/>
               <CustomTimePicker hangeValue={changeValue} value={Date}/>
           <br />

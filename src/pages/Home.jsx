@@ -145,10 +145,9 @@ const Tasks = (props) => {
               >
                 <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
-                <span className='task-item-time'>test</span>
+                <span className='task-item-time'>{task.limit}</span>
                 <br />
                 </div>
-                {/* <p className='task-item-done'>{task.done ? '完了' : '未完了'}</p> */}
                 {task.done ? '完了' : '未完了'}
               </Link>
             </li>
@@ -169,8 +168,11 @@ const Tasks = (props) => {
               to={`/lists/${selectListId}/tasks/${task.id}`}
               className="task-item-link"
             >
-              {task.title}
+              <div className='task-item-information'>
+                <span className='task-item-title'>{task.title}</span>
+                  {task.limit ?<span className='task-item-time'>{task.limit}</span>: <span className='task-item-time'>期限を設定していません</span>}
               <br />
+              </div>
               {task.done ? '完了' : '未完了'}
             </Link>
           </li>

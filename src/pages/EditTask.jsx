@@ -29,6 +29,7 @@ export const EditTask = () => {
       done: isDone,
       limit: Date
     };
+    console.log(data)
 
     axios
       .put(`https://${url}/lists/${listId}/tasks/${taskId}`, data, {
@@ -69,7 +70,7 @@ export const EditTask = () => {
     const Second = ('00' + newValue.second()).slice(-2);
     const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
     setDate(newDate);
-    console.log(newDate);
+    // console.log(newDate);
     // console.log(value.date());
   }
 
@@ -124,7 +125,7 @@ export const EditTask = () => {
           <label>期限</label>
           <p>現在の期限 {getDate} {getTime}</p>
           <br/>
-              <CustomTimePicker hangeValue={changeValue} value={Date}/>
+              <CustomTimePicker changeValue={changeValue} value={Date}/>
           <br />
           <div>
             <input

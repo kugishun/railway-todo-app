@@ -13,7 +13,9 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
+  const [time, setTime] = useState([]);
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+
   useEffect(() => {
     axios
       .get(`https://${url}/lists`, {
@@ -86,12 +88,16 @@ export const Home = () => {
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
-                <div role='tablist' key={key}>
+                <div key={key}>
                   <li
+                    role='button'
                     key={key}
-                    tabIndex={1}
+                    tabIndex={0}
                     className={`list-tab-item ${isActive ? 'active' : ''}`}
                     onClick={() => handleSelectList(list.id)}
+                    onKeyDown={(event) => {
+                      if(event.key == 'Enter') handleSelectList(list.id)
+                    }}
                   >
                     {list.title}
                   </li>
@@ -129,7 +135,6 @@ export const Home = () => {
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>;
-
   if (isDoneDisplay == 'done') {
     return (
       <ul>
@@ -137,7 +142,9 @@ const Tasks = (props) => {
           .filter((task) => {
             return task.done === true;
           })
-          .map((task, key) => (
+          .map((task, key) => {
+            const newTime = new Date(task.limit) - new Date()
+            return(
             <li key={key} className="task-item">
               <Link
                 to={`/lists/${selectListId}/tasks/${task.id}`}
@@ -145,13 +152,13 @@ const Tasks = (props) => {
               >
                 <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
-                <span className='task-item-time'>{task.limit}</span>
+                <span className='task-item-time'>{newTime}</span>
                 <br />
                 </div>
                 {task.done ? '完了' : '未完了'}
               </Link>
             </li>
-          ))}
+          )})}
       </ul>
     );
   }
@@ -162,7 +169,9 @@ const Tasks = (props) => {
         .filter((task) => {
           return task.done === false;
         })
-        .map((task, key) => (
+        .map((task, key) => {
+          const newTime = new Date(task.limit) - new Date()
+          return(
           <li key={key} className="task-item">
             <Link
               to={`/lists/${selectListId}/tasks/${task.id}`}
@@ -170,13 +179,15 @@ const Tasks = (props) => {
             >
               <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
-                  {task.limit ?<span className='task-item-time'>{task.limit}</span>: <span className='task-item-time'>期限を設定していません</span>}
+                  {task.limit ?
+                    <span className='task-item-time'>{Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
+                  : <span className='task-item-time'>期限を設定していません</span>}
               <br />
               </div>
               {task.done ? '完了' : '未完了'}
             </Link>
           </li>
-        ))}
+        )})}
     </ul>
   );
 };

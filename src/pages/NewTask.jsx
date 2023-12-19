@@ -14,7 +14,7 @@ export const NewTask = () => {
   const [detail, setDetail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
-  const [Date,setDate] = useState();
+  const [limitDate,setDate] = useState(null);
   const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
@@ -24,7 +24,7 @@ export const NewTask = () => {
       title: title,
       detail: detail,
       done: false,
-      limit: Date
+      limit: limitDate
     };
     console.log(data)
     axios
@@ -42,15 +42,17 @@ export const NewTask = () => {
   };
 
   const changeValue = (newValue) =>{
-    const Year = newValue.year();
-    const Month = ('00' + (newValue.month()+1)).slice(-2);
-    const Day = ('00' + newValue.date()).slice(-2);
-    const Hour = ('00' + newValue.hour()).slice(-2);
-    const Minute = ('00' + newValue.minute()).slice(-2);
-    const Second = ('00' + newValue.second()).slice(-2);
-    const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
-    setDate(newDate);
-    console.log(newDate);
+    // const Year = newValue.year();
+    // const Month = ('00' + (newValue.month()+1)).slice(-2);
+    // const Day = ('00' + newValue.date()).slice(-2);
+    // const Hour = ('00' + newValue.hour()).slice(-2);
+    // const Minute = ('00' + newValue.minute()).slice(-2);
+    // const Second = ('00' + newValue.second()).slice(-2);
+    // const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
+    const JSTDate = new Date(newValue);
+    console.log(JSTDate.toISOString());
+    console.log(newValue);
+    setDate(JSTDate.toISOString());
     // console.log(value.date());
   }
 
@@ -100,7 +102,7 @@ export const NewTask = () => {
           <br/>
           <label>期限</label>
           <br/>
-              <CustomTimePicker changeValue={changeValue} value={Date}/>
+              <CustomTimePicker changeValue={changeValue} value={limitDate}/>
           <br />
           <label>詳細</label>
           <br />

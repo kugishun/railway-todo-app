@@ -1,15 +1,21 @@
 @charset "utf-8";
 
 .header {
-  width: 100%;
-  height: 80px;
+  width: auto;
+  height: 15%;
   background-color: #242F9B;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
 }
 
-.sign-out-button {
+.page-title{
+  font-size: calc(112.5% + 2vw);
   color: #ffffff;
-  margin: auto 25px auto auto;
+}
+
+.sign-out-button {
+  font-size: calc(50% + 1vw);
+  color: #ffffff;
+  margin: auto 2% auto auto;
 }

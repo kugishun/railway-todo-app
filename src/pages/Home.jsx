@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import { Header } from '../components/Header';
 import { url } from '../const';
@@ -43,6 +44,7 @@ export const Home = () => {
         })
         .then((res) => {
           setTasks(res.data.tasks);
+          console.log(res.data.tasks);
         })
         .catch((err) => {
           setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -72,13 +74,13 @@ export const Home = () => {
         <p className="error-message">{errorMessage}</p>
         <div>
           <div className="list-header">
-            <h2>リスト一覧</h2>
+            <h2 className='list-title'>リスト一覧</h2>
             <div className="list-menu">
               <p>
-                <Link to="/list/new">リスト新規作成</Link>
+                <Link to="/list/new" className='list-new'>リスト新規作成</Link>
               </p>
               <p>
-                <Link to={`/lists/${selectListId}/edit`}>
+                <Link to={`/lists/${selectListId}/edit`} className='list-edit'>
                   選択中のリストを編集
                 </Link>
               </p>
@@ -107,8 +109,8 @@ export const Home = () => {
           </ul>
           <div className="tasks">
             <div className="tasks-header">
-              <h2>タスク一覧</h2>
-              <Link to="/task/new">タスク新規作成</Link>
+              <h2 className='task-title'>タスク一覧</h2>
+              <Link to="/task/new" className='task-new'>タスク新規作成</Link>
             </div>
             <div className="display-select-wrapper">
               <select
@@ -152,7 +154,9 @@ const Tasks = (props) => {
               >
                 <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
-                <span className='task-item-time'>{newTime}</span>
+                {task.limit ?
+                    <span className='task-item-time'>{"期限:"+ dayjs(new Date(task.limit)).format('YYYY年MM月DD日') +": 残り時間:"+ Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
+                  : <span className='task-item-time'>期限を設定していません</span>}
                 <br />
                 </div>
                 {task.done ? '完了' : '未完了'}
@@ -180,7 +184,7 @@ const Tasks = (props) => {
               <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
                   {task.limit ?
-                    <span className='task-item-time'>{Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
+                    <span className='task-item-time'>{"期限:"+  dayjs(new Date(task.limit)).format('YYYY年MM月DD日') +": 残り時間:"+Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
                   : <span className='task-item-time'>期限を設定していません</span>}
               <br />
               </div>

@@ -4,9 +4,10 @@ import CustomTimePicker from './TimePicker';
 export const TestDate = () => {
   const [value, setValue] = useState(null);
   const changeValue = (newValue) =>{
+    const test = new Date(newValue);
     setValue(newValue)
     console.log(value)
-    console.log(value.date());
+    console.log(test.toISOString());
   }
 
   // const Year = value.year();

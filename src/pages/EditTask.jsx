@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import { _, useCookies } from 'react-cookie';
 import { url } from '../const';
@@ -14,9 +15,8 @@ export const EditTask = () => {
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
   const [isDone, setIsDone] = useState();
-  const [Date,setDate] = useState();
-  const [getDate,setGetDate] = useState();
-  const [getTime,setGetTime] = useState();
+  const [limitDate,setDate] = useState();
+  const [limit,setLimit] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
@@ -27,7 +27,7 @@ export const EditTask = () => {
       title: title,
       detail: detail,
       done: isDone,
-      limit: Date
+      limit: limitDate
     };
     console.log(data)
 
@@ -62,14 +62,10 @@ export const EditTask = () => {
   };
 
   const changeValue = (newValue) =>{
-    const Year = newValue.year();
-    const Month = ('00' + (newValue.month()+1)).slice(-2);
-    const Day = ('00' + newValue.date()).slice(-2);
-    const Hour = ('00' + newValue.hour()).slice(-2);
-    const Minute = ('00' + newValue.minute()).slice(-2);
-    const Second = ('00' + newValue.second()).slice(-2);
-    const newDate = `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}+09:00`;
-    setDate(newDate);
+    const JSTDate = new Date(newValue);
+    console.log(JSTDate.toISOString());
+    console.log(newValue);
+    setDate(JSTDate.toISOString());
     // console.log(newDate);
     // console.log(value.date());
   }
@@ -88,6 +84,7 @@ export const EditTask = () => {
         setIsDone(task.done);
         if(task.limit != null){
           console.log(task.limit);
+          setLimit(task.limit);
           setGetDate((task.limit).slice(0,10));
           setGetTime((task.limit).slice(11,16));
         }
@@ -123,9 +120,9 @@ export const EditTask = () => {
           />
           <br />
           <label>期限</label>
-          <p>現在の期限 {getDate} {getTime}</p>
+          <p>現在の期限 {dayjs(new Date(limit)).format('YYYY年MM月DD日 HH時MM分')}</p>
           <br/>
-              <CustomTimePicker changeValue={changeValue} value={Date}/>
+              <CustomTimePicker changeValue={changeValue} value={limitDate}/>
           <br />
           <div>
             <input

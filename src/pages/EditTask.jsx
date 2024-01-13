@@ -85,8 +85,6 @@ export const EditTask = () => {
         if(task.limit != null){
           console.log(task.limit);
           setLimit(task.limit);
-          setGetDate((task.limit).slice(0,10));
-          setGetTime((task.limit).slice(11,16));
         }
       })
       .catch((err) => {
@@ -120,7 +118,7 @@ export const EditTask = () => {
           />
           <br />
           <label>期限</label>
-          <p>現在の期限 {dayjs(new Date(limit)).format('YYYY年MM月DD日 HH時MM分')}</p>
+          <p>現在の期限 {dayjs(new Date(limit)).format('YYYY年MM月DD日 HH時mm分')}</p>
           <br/>
               <CustomTimePicker changeValue={changeValue} value={limitDate}/>
           <br />

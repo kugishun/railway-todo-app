@@ -95,10 +95,14 @@ export const Home = () => {
                     role='button'
                     key={key}
                     tabIndex={0}
-                    className={`list-tab-item ${isActive ? 'active' : ''}`}
-                    onClick={() => handleSelectList(list.id)}
+                    aria-pressed={`${isActive ? 'true': 'false'}`}
+                    className='list-tab-item'
+                    onClick={() => {
+                      handleSelectList(list.id)}}
                     onKeyDown={(event) => {
-                      if(event.key == 'Enter') handleSelectList(list.id)
+                      if(event.key == 'Enter'){
+                        handleSelectList(list.id)
+                      }
                     }}
                   >
                     {list.title}
@@ -155,7 +159,8 @@ const Tasks = (props) => {
                 <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
                 {task.limit ?
-                    <span className='task-item-time'>{"期限:"+ dayjs(new Date(task.limit)).format('YYYY年MM月DD日') +": 残り時間:"+ Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
+                    <div className='task-item-div'><span className='task-item-time'>{"期限:"+ dayjs(new Date(task.limit)).format('YYYY年MM月DD日HH時mm分:')}</span>
+                    <span className='task-item-time'>{"  残り時間:"+ Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span></div>
                   : <span className='task-item-time'>期限を設定していません</span>}
                 <br />
                 </div>
@@ -184,7 +189,8 @@ const Tasks = (props) => {
               <div className='task-item-information'>
                 <span className='task-item-title'>{task.title}</span>
                   {task.limit ?
-                    <span className='task-item-time'>{"期限:"+  dayjs(new Date(task.limit)).format('YYYY年MM月DD日') +": 残り時間:"+Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span>
+                    <div className='task-item-div'><span className='task-item-time'>{"期限:"+ dayjs(new Date(task.limit)).format('YYYY年MM月DD日HH時mm分:')}</span>
+                    <span className='task-item-time'>{'残り時間:'+ Math.floor(newTime/(1000 * 60 * 60 * 24))+"日" + (Math.floor(newTime/(1000 * 60 * 60)) - Math.floor(newTime/(1000 * 60 * 60 * 24)) * 24) + "時間" + (Math.floor(newTime/(1000*60)) - (Math.floor(newTime/(1000*60*60))*60)) + "分"}</span></div>
                   : <span className='task-item-time'>期限を設定していません</span>}
               <br />
               </div>
